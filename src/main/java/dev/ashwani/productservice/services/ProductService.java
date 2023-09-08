@@ -1,7 +1,9 @@
 package dev.ashwani.productservice.services;
 
-import dev.ashwani.productservice.models.Product;
+import com.github.dockerjava.api.exception.NotFoundException;
+import dev.ashwani.productservice.dto.GenericProductDto;
 
 public interface ProductService {
-    Product getProductById(Long id);
+    GenericProductDto getProductById(Long id) throws NotFoundException;
+    GenericProductDto createProduct(GenericProductDto productDto);
 }

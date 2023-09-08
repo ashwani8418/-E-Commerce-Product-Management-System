@@ -1,5 +1,6 @@
 package dev.ashwani.productservice.controllers;
 
+import dev.ashwani.productservice.dto.GenericProductDto;
 import dev.ashwani.productservice.models.Product;
 import dev.ashwani.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,8 +19,8 @@ public class ProductController {
         this.productService = productService;
     }
     @PostMapping()
-    public String createProduct(){
-        return "Creating a product in our database";
+    public GenericProductDto createProduct(@RequestBody GenericProductDto product){
+        return productService.createProduct(product);
     }
 
     @GetMapping()
@@ -28,7 +29,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id")  Long id){
+    public GenericProductDto getProductById(@PathVariable("id")  Long id){
         return productService.getProductById(id);
     }
 
