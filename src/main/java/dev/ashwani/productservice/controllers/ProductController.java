@@ -6,6 +6,8 @@ import dev.ashwani.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
@@ -24,8 +26,8 @@ public class ProductController {
     }
 
     @GetMapping()
-    public String getAllProducts(){
-        return "Getting all Products Soon";
+    public List<GenericProductDto> getAllProducts(){
+        return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
@@ -39,8 +41,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProductById(@PathVariable("id") Long id){
+    public GenericProductDto deleteProductById(@PathVariable("id") Long id){
 
-        return "Deleting product for id " + id;
+        return productService.deleteProductById(id);
     }
 }
