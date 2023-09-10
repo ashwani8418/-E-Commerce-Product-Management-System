@@ -29,7 +29,7 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<GenericProductDto> getAllProducts(){
+    public List<GenericProductDto> getAllProducts() throws NotFoundException{
         return productService.getAllProducts();
     }
 
@@ -39,18 +39,14 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public String updateProductById(@PathVariable("id") Long id){
-        return "Updating product for id " + id;
+    public GenericProductDto updateProductById(@RequestBody @PathVariable("id") Long id) throws NotFoundException {
+        return productService.updateProductById(id, new GenericProductDto());
     }
 
     @DeleteMapping("/{id}")
-    public GenericProductDto deleteProductById(@PathVariable("id") Long id){
+    public GenericProductDto deleteProductById(@PathVariable("id") Long id) throws NotFoundException{
 
         return productService.deleteProductById(id);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionDto> handleNotFoundException(NotFoundException notFoundException){
-        return new ResponseEntity(new ExceptionDto(HttpStatus.NOT_FOUND, notFoundException.getMessage()), HttpStatus.NOT_FOUND);
-    }
 }

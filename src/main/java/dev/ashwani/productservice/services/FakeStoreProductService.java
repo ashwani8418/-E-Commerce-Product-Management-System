@@ -59,19 +59,38 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public List<GenericProductDto> getAllProducts(){
+    public List<GenericProductDto> getAllProducts() throws NotFoundException{
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<GenericProductDto[]> response =  restTemplate.getForEntity(productBaseURL, GenericProductDto[].class);
         GenericProductDto[] genericProductDtos = response.getBody();
+        if(genericProductDtos == null){
+            throw new NotFoundException("Not able to fetch products");
+        }
         return List.of(genericProductDtos);
     }
 
     @Override
-    public GenericProductDto deleteProductById(Long id) {
+    public GenericProductDto deleteProductById(Long id) throws NotFoundException {
         RestTemplate restTemplate = restTemplateBuilder.build();
         RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeStoreProductDto.class);
         ResponseExtractor<ResponseEntity<FakeStoreProductDto>> responseExtractor = restTemplate.responseEntityExtractor(FakeStoreProductDto.class);
         ResponseEntity<FakeStoreProductDto> response = restTemplate.execute(productBaseURL + "/" + id, HttpMethod.DELETE, requestCallback, responseExtractor);
+        if(response.getBody() == null){
+            throw new NotFoundException("Product not found for id " + id);
+        }
+        return convertFakeStoreProductIntoGenericProduct(response.getBody());
+    }
+
+    @Override
+
+    public GenericProductDto updateProductById(Long id, GenericProductDto productDto) throws NotFoundException {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeStoreProductDto.class);
+        ResponseExtractor<ResponseEntity<FakeStoreProductDto>> responseExtractor = restTemplate.responseEntityExtractor(FakeStoreProductDto.class);
+        ResponseEntity<FakeStoreProductDto> response = restTemplate.execute(productBaseURL + "/" + id, HttpMethod.PUT, requestCallback, responseExtractor);
+        if(response.getBody() == null){
+            throw new NotFoundException("Product not found for id " + id);
+        }
         return convertFakeStoreProductIntoGenericProduct(response.getBody());
     }
 }
