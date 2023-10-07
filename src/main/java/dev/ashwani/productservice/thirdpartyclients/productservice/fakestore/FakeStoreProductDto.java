@@ -1,4 +1,4 @@
-package dev.ashwani.productservice.dto;
+package dev.ashwani.productservice.thirdpartyclients.productservice.fakestore;
 import lombok.Getter;
 import lombok.Setter;
 

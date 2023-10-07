@@ -1,6 +1,5 @@
 package dev.ashwani.productservice.services;
 import dev.ashwani.productservice.dto.GenericProductDto;
-import dev.ashwani.productservice.models.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

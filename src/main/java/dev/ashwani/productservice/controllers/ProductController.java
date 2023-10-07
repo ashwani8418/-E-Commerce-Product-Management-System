@@ -1,12 +1,8 @@
 package dev.ashwani.productservice.controllers;
-
-import dev.ashwani.productservice.dto.ExceptionDto;
 import dev.ashwani.productservice.dto.GenericProductDto;
 import dev.ashwani.productservice.exceptions.NotFoundException;
 import dev.ashwani.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +16,7 @@ public class ProductController {
     private ProductService productService;
 
 //    Constructor Injection this method followed in industry
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService){
+    public ProductController(ProductService productService){
         this.productService = productService;
     }
     @PostMapping()
