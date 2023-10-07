@@ -16,7 +16,7 @@ public class ProductController {
     private ProductService productService;
 
 //    Constructor Injection this method followed in industry
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService){
         this.productService = productService;
     }
     @PostMapping()
